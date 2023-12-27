@@ -1,0 +1,8 @@
+##### setting #####
+# make virtual venv and select the interpreter
+py -3 -m venv venv          # in terminal
+# make terminal to venv
+./venv/Scripts/activate.bat
+
+# start
+uvicorn main:app --reload
