@@ -10,7 +10,7 @@ class Post(BaseModel):
     title: str
     content: str
     published: bool = True
-    rating: int = None
+    rating: Optional[int] = None
 
 
 my_posts = [{"title": "title of post 1", "content": "content of post 1", "id": 1},
@@ -54,3 +54,14 @@ def delete_post(id: int):
                             detail= f"post with id: {id} was not found")
     my_posts.pop(idx)
     return Response(status_code= status.HTTP_204_NO_CONTENT)
+
+@app.put("/posts/{id}")
+def update_post(id: int, post: Post):
+    idx, _ = find_post(id)
+    if idx is None:
+        raise HTTPException(status_code= status.HTTP_404_NOT_FOUND,
+                            detail= f"post with id: {id} was not found")
+    post_dict = post.model_dump()
+    post_dict['id'] = id
+    my_posts[idx] = post_dict
+    return {"data": post_dict}
