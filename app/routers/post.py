@@ -10,19 +10,18 @@ router = APIRouter(
     tags= ["posts"]
 )
 
-@router.get("/", response_model= List[schemas.Post])
+@router.get("", response_model= List[schemas.Post])
 def get_posts(db: Session = Depends(get_db), 
             user_id: str = Depends(oauth2.get_current_user)):
     posts = db.query(models.Post).all()
     return posts
 
-@router.post("/", status_code= status.HTTP_201_CREATED, response_model= schemas.Post)
+@router.post("", status_code= status.HTTP_201_CREATED, response_model= schemas.Post)
 def create_posts(post: schemas.PostCreate, 
                 db: Session = Depends(get_db),
                 current_user: str = Depends(oauth2.get_current_user)):
 
     new_post = models.Post(**post.model_dump())
-    print(1, current_user.id)
     new_post.user_id = current_user.id
     
     db.add(new_post)
