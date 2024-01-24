@@ -15,19 +15,6 @@ class Post(BaseModel):
     content: str
     published: bool = True
 
-while True:
-    try:
-        conn = psycopg.connect(dbname= 'fastapi', user= 'postgres',
-                                password= 'jch0618', row_factory= dict_row)
-        cursor = conn.cursor()
-        print("Database connection was succesfull!")
-        break
-    except Exception as error:
-        print("Connecting to database failed")
-        print("Error: ", error)
-        time.sleep(2)
-
-
 my_posts = [{"title": "title of post 1", "content": "content of post 1", "id": 1},
             {"title": "favorite foods", "content": "I like pizza", "id": 2}]
 
